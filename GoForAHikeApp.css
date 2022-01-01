@@ -1,0 +1,30 @@
+.section .reveal .state-background{
+background-color: #03C04A;
+background-size: cover;
+text-align: center;
+font-size: 2em;
+}
+
+.exclaim .reveal .state-background {
+  background: #E8E8E8;
+} 
+
+.exclaim .reveal h1,
+.exclaim .reveal h2,
+.exclaim .reveal h3{
+  color: #03C04A;
+  font-weight: bold;
+}
+.exclaim .reveal a{
+  color: #03C04A;
+}
+
+table {
+  border-collapse: collapse;
+  border: 3px solid #03C04A;
+  background-color:rgba(0, 0, 0, 0);
+}
+
+
+
+

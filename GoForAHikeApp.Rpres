@@ -1,0 +1,66 @@
+Go For A Hike App
+========================================================
+author: Developing Data Products Project Presentation
+date: `r Sys.Date()`
+font-family: 'Helvetica'
+autosize: true
+
+```{r, echo=FALSE}
+library(tidyverse)
+dpath <- "https://raw.githubusercontent.com/yoshiohasegawa/wta-scraper/master/Results/2021-04-25_wta_hike_data.csv"
+trail_data <- read_csv(dpath)
+df <- trail_data %>% 
+    filter(!is.na(LATITUDE), LATITUDE < 80, LONGITUDE < 0, RATING > 0, !is.na(DISTANCE)) %>%
+  select(REGION, DISTANCE, RATING, LATITUDE, LONGITUDE, REPORT_COUNT)
+note <- paste0()
+library(gtsummary)
+tbl_summary <- df %>%
+  tbl_summary(by = REGION,
+    statistic = all_continuous() ~ c("{median}"),
+  ) %>% 
+  modify_header(label = "**Variable**") %>% # update the column header
+  bold_labels()  %>%
+  as_gt() %>%
+  gt::tab_source_note(gt::md(paste0(
+  "*The data shown in the app and this presentation are taken directly from",
+  dpath,
+  "and represent a snapshot in time of WTA data.*")))
+```
+
+Purpose
+========================================================
+type: exclaim
+
+The Go For a Hike App is designed to help people find a suitable hike for them. 
+Users can filter to see:
+
+- Hikes by Region (Location)
+- Long and Short hikes
+- Average User Ratings
+
+Landing Page
+========================================================
+type: exclaim
+
+Users see all rated hikes on the landing page. 
+
+![landing_page](landing.png)
+
+Interactivity
+========================================================
+type: exclaim
+
+There are two methods users can interact with the application, using the controls on the right.
+
+- Show a single region: *users can select one of the regions to filter the data*
+- Select the number of hikes to see details: *users can select between one and twenty hikes (ties are shown) for the longest and shortest.*
+
+Users get information about average ratings and distance
+
+Data
+========================================================
+type: exclaim
+
+```{r, echo=FALSE, results="asis"}
+print(tbl_summary)
+```
